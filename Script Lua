@@ -81,7 +81,7 @@ ToggleMenuBtn.Size = UDim2.new(0, 150, 0, 48)
 ToggleMenuBtn.Position = UDim2.new(0.02, 0, 0.15, 0)
 ToggleMenuBtn.BackgroundColor3 = Color3.fromRGB(8, 12, 20)
 ToggleMenuBtn.Text = "  SYSTEM"
-ToggleMenuBtn.TextColor3 = Color3.fromRGB(0, 240, 255)
+ToggleMenuBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 ToggleMenuBtn.TextSize = 18
 ToggleMenuBtn.Font = Enum.Font.GothamBold
 ToggleMenuBtn.Active = true
@@ -201,12 +201,12 @@ local CloseStroke = Instance.new("UIStroke", CloseBtn)
 CloseStroke.Color = Color3.fromRGB(255, 50, 50)
 CloseStroke.Thickness = 1.5
 
-CloseBtn.MouseButton1Click:Connect(function()
+CloseBtn.Activated:Connect(function()
     MainFrame.Visible = false
     TweenService:Create(ToggleMenuBtn, TweenInfo.new(0.2), {BackgroundTransparency = 0}):Play()
 end)
 
-ToggleMenuBtn.MouseButton1Click:Connect(function()
+ToggleMenuBtn.Activated:Connect(function()
     MainFrame.Visible = not MainFrame.Visible
     if MainFrame.Visible then
         TweenService:Create(ToggleMenuBtn, TweenInfo.new(0.2), {BackgroundTransparency = 0.5}):Play()
@@ -243,7 +243,7 @@ local function CreateSciFiButton(text, callback)
     btn.Size = UDim2.new(1, -4, 0, 45)
     btn.BackgroundColor3 = Color3.fromRGB(12, 18, 30)
     btn.Text = text
-    btn.TextColor3 = Color3.fromRGB(200, 220, 255)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
     btn.TextSize = 13
     btn.Font = Enum.Font.GothamBold
     btn.TextXAlignment = Enum.TextXAlignment.Center
@@ -268,7 +268,7 @@ local function CreateSciFiButton(text, callback)
         TweenService:Create(stroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 200, 230)}):Play()
     end)
 
-    btn.MouseButton1Click:Connect(callback)
+    btn.Activated:Connect(callback)
     return btn
 end
 
@@ -281,7 +281,10 @@ local SpeedBtn = CreateSciFiButton("วิ่งเร็ว 50 : OFF", function
     speedEnabled = not speedEnabled
     if speedEnabled then
         SpeedBtn.Text = "วิ่งเร็ว 50 : ON"
-        SpeedBtn.TextColor3 = Color3.fromRGB(80, 255, 150)
+        SpeedBtn.BackgroundColor3 = Color3.fromRGB(20, 45, 35)
+        local stroke = SpeedBtn:FindFirstChildOfClass("UIStroke")
+        if stroke then stroke.Color = Color3.fromRGB(0, 255, 150) end
+        
         speedConnection = RunService.Heartbeat:Connect(function()
             local char = LocalPlayer.Character
             if char and char:FindFirstChildOfClass("Humanoid") then
@@ -291,7 +294,10 @@ local SpeedBtn = CreateSciFiButton("วิ่งเร็ว 50 : OFF", function
         SendNotification("ระบบความเร็ว", "เปิดใช้งาน Speed 50 เรียบร้อย")
     else
         SpeedBtn.Text = "วิ่งเร็ว 50 : OFF"
-        SpeedBtn.TextColor3 = Color3.fromRGB(200, 220, 255)
+        SpeedBtn.BackgroundColor3 = Color3.fromRGB(12, 18, 30)
+        local stroke = SpeedBtn:FindFirstChildOfClass("UIStroke")
+        if stroke then stroke.Color = Color3.fromRGB(0, 200, 230) end
+        
         if speedConnection then speedConnection:Disconnect() end
         local char = LocalPlayer.Character
         if char and char:FindFirstChildOfClass("Humanoid") then
