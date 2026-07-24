@@ -1,0 +1,326 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+local TweenService = game:GetService("TweenService")
+
+local LocalPlayer = Players.LocalPlayer
+
+LocalPlayer.CameraMode = Enum.CameraMode.Classic
+LocalPlayer.CameraMinZoomDistance = 0.5
+LocalPlayer.CameraMaxZoomDistance = 128
+
+if CoreGui:FindFirstChild("AdvancedHubUI") then
+    CoreGui.AdvancedHubUI:Destroy()
+end
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "AdvancedHubUI"
+ScreenGui.Parent = CoreGui
+ScreenGui.ResetOnSpawn = false
+ScreenGui.IgnoreGuiInset = true
+
+local NotifContainer = Instance.new("Frame")
+NotifContainer.Size = UDim2.new(0, 240, 1, 0)
+NotifContainer.Position = UDim2.new(1, -250, 0, 10)
+NotifContainer.BackgroundTransparency = 1
+NotifContainer.Parent = ScreenGui
+
+local NotifLayout = Instance.new("UIListLayout")
+NotifLayout.SortOrder = Enum.SortOrder.LayoutOrder
+NotifLayout.Padding = UDim.new(0, 6)
+NotifLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+NotifLayout.Parent = NotifContainer
+
+local function SendNotification(title, text)
+    local card = Instance.new("Frame")
+    card.Size = UDim2.new(1, 0, 0, 50)
+    card.BackgroundColor3 = Color3.fromRGB(10, 14, 22)
+    card.BackgroundTransparency = 0.1
+    card.Parent = NotifContainer
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 6)
+    corner.Parent = card
+
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = Color3.fromRGB(0, 230, 255)
+    stroke.Thickness = 1
+    stroke.Parent = card
+
+    local tLabel = Instance.new("TextLabel")
+    tLabel.Size = UDim2.new(1, -16, 0, 20)
+    tLabel.Position = UDim2.new(0, 8, 0, 4)
+    tLabel.BackgroundTransparency = 1
+    tLabel.Text = title
+    tLabel.TextColor3 = Color3.fromRGB(0, 240, 255)
+    tLabel.TextSize = 11
+    tLabel.Font = Enum.Font.GothamBold
+    tLabel.TextXAlignment = Enum.TextXAlignment.Left
+    tLabel.Parent = card
+
+    local mLabel = Instance.new("TextLabel")
+    mLabel.Size = UDim2.new(1, -16, 0, 20)
+    mLabel.Position = UDim2.new(0, 8, 0, 22)
+    mLabel.BackgroundTransparency = 1
+    mLabel.Text = text
+    mLabel.TextColor3 = Color3.fromRGB(200, 220, 240)
+    mLabel.TextSize = 10
+    mLabel.Font = Enum.Font.Gotham
+    mLabel.TextXAlignment = Enum.TextXAlignment.Left
+    mLabel.Parent = card
+
+    task.delay(3, function()
+        TweenService:Create(card, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+        task.wait(0.3)
+        card:Destroy()
+    end)
+end
+
+local ToggleMenuBtn = Instance.new("TextButton")
+ToggleMenuBtn.Size = UDim2.new(0, 150, 0, 48)
+ToggleMenuBtn.Position = UDim2.new(0.02, 0, 0.15, 0)
+ToggleMenuBtn.BackgroundColor3 = Color3.fromRGB(8, 12, 20)
+ToggleMenuBtn.Text = "  SYSTEM"
+ToggleMenuBtn.TextColor3 = Color3.fromRGB(0, 240, 255)
+ToggleMenuBtn.TextSize = 18
+ToggleMenuBtn.Font = Enum.Font.GothamBold
+ToggleMenuBtn.Active = true
+ToggleMenuBtn.Draggable = true
+ToggleMenuBtn.Parent = ScreenGui
+
+local PolyCorner = Instance.new("UICorner", ToggleMenuBtn)
+PolyCorner.CornerRadius = UDim.new(0, 8)
+
+local PolyStroke = Instance.new("UIStroke", ToggleMenuBtn)
+PolyStroke.Color = Color3.fromRGB(0, 240, 255)
+PolyStroke.Thickness = 2.5
+
+local CutLeftTop = Instance.new("Frame")
+CutLeftTop.Size = UDim2.new(0, 22, 0, 22)
+CutLeftTop.Position = UDim2.new(-11, 0, -11, 0)
+CutLeftTop.BackgroundColor3 = Color3.fromRGB(8, 12, 20)
+CutLeftTop.Rotation = 45
+CutLeftTop.Parent = ToggleMenuBtn
+
+local CutLeftBottom = Instance.new("Frame")
+CutLeftBottom.Size = UDim2.new(0, 22, 0, 22)
+CutLeftBottom.Position = UDim2.new(-11, 0, 1, -11)
+CutLeftBottom.BackgroundColor3 = Color3.fromRGB(8, 12, 20)
+CutLeftBottom.Rotation = 45
+CutLeftBottom.Parent = ToggleMenuBtn
+
+local D1 = Instance.new("Frame")
+D1.Size = UDim2.new(0, 10, 0, 10)
+D1.Position = UDim2.new(0, 16, 0, 14)
+D1.BackgroundColor3 = Color3.fromRGB(0, 240, 255)
+D1.Rotation = 45
+D1.Parent = ToggleMenuBtn
+local D1C = Instance.new("UICorner", D1)
+D1C.CornerRadius = UDim.new(0, 2)
+
+local D2 = Instance.new("Frame")
+D2.Size = UDim2.new(0, 10, 0, 10)
+D2.Position = UDim2.new(0, 16, 0, 26)
+D2.BackgroundColor3 = Color3.fromRGB(0, 240, 255)
+D2.Rotation = 45
+D2.Parent = ToggleMenuBtn
+local D2C = Instance.new("UICorner", D2)
+D2C.CornerRadius = UDim.new(0, 2)
+
+local D3 = Instance.new("Frame")
+D3.Size = UDim2.new(0, 10, 0, 10)
+D3.Position = UDim2.new(0, 28, 0, 14)
+D3.BackgroundColor3 = Color3.fromRGB(0, 240, 255)
+D3.Rotation = 45
+D3.Parent = ToggleMenuBtn
+local D3C = Instance.new("UICorner", D3)
+D3C.CornerRadius = UDim.new(0, 2)
+
+local D4 = Instance.new("Frame")
+D4.Size = UDim2.new(0, 10, 0, 10)
+D4.Position = UDim2.new(0, 28, 0, 26)
+D4.BackgroundColor3 = Color3.fromRGB(0, 240, 255)
+D4.Rotation = 45
+D4.Parent = ToggleMenuBtn
+local D4C = Instance.new("UICorner", D4)
+D4C.CornerRadius = UDim.new(0, 2)
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 290, 0, 350)
+MainFrame.Position = UDim2.new(0.1, 0, 0.15, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(8, 12, 20)
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.ClipsDescendants = true
+MainFrame.Parent = ScreenGui
+MainFrame.Visible = false
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 10)
+MainCorner.Parent = MainFrame
+
+local MainStroke = Instance.new("UIStroke")
+MainStroke.Color = Color3.fromRGB(0, 220, 255)
+MainStroke.Thickness = 2
+MainStroke.Parent = MainFrame
+
+local TitleBar = Instance.new("Frame")
+TitleBar.Size = UDim2.new(1, 0, 0, 42)
+TitleBar.BackgroundTransparency = 1
+TitleBar.Parent = MainFrame
+
+local TitleLabel = Instance.new("TextLabel")
+TitleLabel.Size = UDim2.new(1, -50, 1, 0)
+TitleLabel.Position = UDim2.new(0, 12, 0, 0)
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.RichText = true
+TitleLabel.Text = "<b>ศูนย์สั่งการ</b>"
+TitleLabel.TextColor3 = Color3.fromRGB(0, 220, 255)
+TitleLabel.TextSize = 14
+TitleLabel.Font = Enum.Font.GothamBold
+TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+TitleLabel.TextYAlignment = Enum.TextYAlignment.Center
+TitleLabel.Parent = TitleBar
+
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 28, 0, 28)
+CloseBtn.Position = UDim2.new(1, -36, 0.5, -14)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(40, 10, 10)
+CloseBtn.BackgroundTransparency = 0.2
+CloseBtn.Text = "✕"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 50, 50)
+CloseBtn.TextSize = 14
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.Parent = TitleBar
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(0, 6)
+CloseCorner.Parent = CloseBtn
+
+local CloseStroke = Instance.new("UIStroke", CloseBtn)
+CloseStroke.Color = Color3.fromRGB(255, 50, 50)
+CloseStroke.Thickness = 1.5
+
+CloseBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = false
+    TweenService:Create(ToggleMenuBtn, TweenInfo.new(0.2), {BackgroundTransparency = 0}):Play()
+end)
+
+ToggleMenuBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = not MainFrame.Visible
+    if MainFrame.Visible then
+        TweenService:Create(ToggleMenuBtn, TweenInfo.new(0.2), {BackgroundTransparency = 0.5}):Play()
+    else
+        TweenService:Create(ToggleMenuBtn, TweenInfo.new(0.2), {BackgroundTransparency = 0}):Play()
+    end
+end)
+
+local LineSeparator = Instance.new("Frame")
+LineSeparator.Size = UDim2.new(1, -24, 0, 1)
+LineSeparator.Position = UDim2.new(0, 12, 0, 42)
+LineSeparator.BackgroundColor3 = Color3.fromRGB(0, 180, 200)
+LineSeparator.BackgroundTransparency = 0.4
+LineSeparator.BorderSizePixel = 0
+LineSeparator.Parent = MainFrame
+
+local Container = Instance.new("ScrollingFrame")
+Container.Size = UDim2.new(1, -16, 1, -55)
+Container.Position = UDim2.new(0, 8, 0, 50)
+Container.BackgroundTransparency = 1
+Container.BorderSizePixel = 0
+Container.CanvasSize = UDim2.new(0, 0, 0, 240)
+Container.ScrollBarThickness = 0
+Container.Parent = MainFrame
+
+local UIListLayout = Instance.new("UIListLayout")
+UIListLayout.Parent = Container
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 10)
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+local function CreateSciFiButton(text, callback)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, -4, 0, 45)
+    btn.BackgroundColor3 = Color3.fromRGB(12, 18, 30)
+    btn.Text = text
+    btn.TextColor3 = Color3.fromRGB(200, 220, 255)
+    btn.TextSize = 13
+    btn.Font = Enum.Font.GothamBold
+    btn.TextXAlignment = Enum.TextXAlignment.Center
+    btn.Parent = Container
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 6)
+    corner.Parent = btn
+
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = Color3.fromRGB(0, 200, 230)
+    stroke.Thickness = 1.5
+    stroke.Parent = btn
+
+    btn.MouseEnter:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(20, 30, 50)}):Play()
+        TweenService:Create(stroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 255, 255)}):Play()
+    end)
+
+    btn.MouseLeave:Connect(function()
+        TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(12, 18, 30)}):Play()
+        TweenService:Create(stroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 200, 230)}):Play()
+    end)
+
+    btn.MouseButton1Click:Connect(callback)
+    return btn
+end
+
+local speedEnabled = false
+local defaultSpeed = 16
+local targetSpeed = 50
+local speedConnection = nil
+
+local SpeedBtn = CreateSciFiButton("วิ่งเร็ว 50 : OFF", function()
+    speedEnabled = not speedEnabled
+    if speedEnabled then
+        SpeedBtn.Text = "วิ่งเร็ว 50 : ON"
+        SpeedBtn.TextColor3 = Color3.fromRGB(80, 255, 150)
+        speedConnection = RunService.Heartbeat:Connect(function()
+            local char = LocalPlayer.Character
+            if char and char:FindFirstChildOfClass("Humanoid") then
+                char:FindFirstChildOfClass("Humanoid").WalkSpeed = targetSpeed
+            end
+        end)
+        SendNotification("ระบบความเร็ว", "เปิดใช้งาน Speed 50 เรียบร้อย")
+    else
+        SpeedBtn.Text = "วิ่งเร็ว 50 : OFF"
+        SpeedBtn.TextColor3 = Color3.fromRGB(200, 220, 255)
+        if speedConnection then speedConnection:Disconnect() end
+        local char = LocalPlayer.Character
+        if char and char:FindFirstChildOfClass("Humanoid") then
+            char:FindFirstChildOfClass("Humanoid").WalkSpeed = defaultSpeed
+        end
+        SendNotification("ระบบความเร็ว", "ปิดการใช้งานแล้ว")
+    end
+end)
+
+CreateSciFiButton("ไปที่ประตู", function()
+    local char = LocalPlayer.Character
+    if char and char:FindFirstChild("HumanoidRootPart") then
+        char.HumanoidRootPart.CFrame = CFrame.new(-36.11, 3.90, 111.03)
+        SendNotification("เทเลพอร์ต", "เดินทางไปที่ประตูสำเร็จ")
+    end
+end)
+
+CreateSciFiButton("ไปที่ห้องพยาบาล", function()
+    local char = LocalPlayer.Character
+    if char and char:FindFirstChild("HumanoidRootPart") then
+        char.HumanoidRootPart.CFrame = CFrame.new(-5.36, 3.98, -9.85)
+        SendNotification("เทเลพอร์ต", "เดินทางไปที่ห้องพยาบาลสำเร็จ")
+    end
+end)
+
+CreateSciFiButton("ไปที่ลงทะเบียนผู้ป่วย", function()
+    local char = LocalPlayer.Character
+    if char and char:FindFirstChild("HumanoidRootPart") then
+        char.HumanoidRootPart.CFrame = CFrame.new(16.99, 3.98, 110.50)
+        SendNotification("เทเลพอร์ต", "เดินทางไปจุดลงทะเบียนสำเร็จ")
+    end
+end)
