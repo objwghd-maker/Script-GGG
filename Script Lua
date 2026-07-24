@@ -277,13 +277,51 @@ local defaultSpeed = 16
 local targetSpeed = 50
 local speedConnection = nil
 
-local SpeedBtn = CreateSciFiButton("วิ่งเร็ว 50 : OFF", function()
+local SpeedBtn = Instance.new("TextButton")
+SpeedBtn.Size = UDim2.new(1, -4, 0, 45)
+SpeedBtn.BackgroundColor3 = Color3.fromRGB(12, 18, 30)
+SpeedBtn.Text = "วิ่งเร็ว 50 : OFF"
+SpeedBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedBtn.TextSize = 13
+SpeedBtn.Font = Enum.Font.GothamBold
+SpeedBtn.TextXAlignment = Enum.TextXAlignment.Center
+SpeedBtn.Parent = Container
+
+local SpeedBtnCorner = Instance.new("UICorner")
+SpeedBtnCorner.CornerRadius = UDim.new(0, 6)
+SpeedBtnCorner.Parent = SpeedBtn
+
+local SpeedBtnStroke = Instance.new("UIStroke")
+SpeedBtnStroke.Color = Color3.fromRGB(0, 200, 230)
+SpeedBtnStroke.Thickness = 1.5
+SpeedBtnStroke.Parent = SpeedBtn
+
+SpeedBtn.MouseEnter:Connect(function()
+    if speedEnabled then
+        TweenService:Create(SpeedBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(25, 55, 45)}):Play()
+        TweenService:Create(SpeedBtnStroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 255, 200)}):Play()
+    else
+        TweenService:Create(SpeedBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(20, 30, 50)}):Play()
+        TweenService:Create(SpeedBtnStroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 255, 255)}):Play()
+    end
+end)
+
+SpeedBtn.MouseLeave:Connect(function()
+    if speedEnabled then
+        TweenService:Create(SpeedBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(15, 40, 30)}):Play()
+        TweenService:Create(SpeedBtnStroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 255, 150)}):Play()
+    else
+        TweenService:Create(SpeedBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(12, 18, 30)}):Play()
+        TweenService:Create(SpeedBtnStroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 200, 230)}):Play()
+    end
+end)
+
+SpeedBtn.Activated:Connect(function()
     speedEnabled = not speedEnabled
     if speedEnabled then
         SpeedBtn.Text = "วิ่งเร็ว 50 : ON"
-        SpeedBtn.BackgroundColor3 = Color3.fromRGB(20, 45, 35)
-        local stroke = SpeedBtn:FindFirstChildOfClass("UIStroke")
-        if stroke then stroke.Color = Color3.fromRGB(0, 255, 150) end
+        TweenService:Create(SpeedBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(15, 40, 30)}):Play()
+        TweenService:Create(SpeedBtnStroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 255, 150)}):Play()
         
         speedConnection = RunService.Heartbeat:Connect(function()
             local char = LocalPlayer.Character
@@ -294,9 +332,8 @@ local SpeedBtn = CreateSciFiButton("วิ่งเร็ว 50 : OFF", function
         SendNotification("ระบบความเร็ว", "เปิดใช้งาน Speed 50 เรียบร้อย")
     else
         SpeedBtn.Text = "วิ่งเร็ว 50 : OFF"
-        SpeedBtn.BackgroundColor3 = Color3.fromRGB(12, 18, 30)
-        local stroke = SpeedBtn:FindFirstChildOfClass("UIStroke")
-        if stroke then stroke.Color = Color3.fromRGB(0, 200, 230) end
+        TweenService:Create(SpeedBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(12, 18, 30)}):Play()
+        TweenService:Create(SpeedBtnStroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 200, 230)}):Play()
         
         if speedConnection then speedConnection:Disconnect() end
         local char = LocalPlayer.Character
