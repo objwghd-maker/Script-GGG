@@ -216,10 +216,8 @@ local function closeMenu()
 end
 
 ToggleMenuBtn.MouseButton1Click:Connect(toggleMenu)
-ToggleMenuBtn.TouchTap:Connect(toggleMenu)
 
 CloseBtn.MouseButton1Click:Connect(closeMenu)
-CloseBtn.TouchTap:Connect(closeMenu)
 
 local LineSeparator = Instance.new("Frame")
 LineSeparator.Size = UDim2.new(1, -24, 0, 1)
@@ -275,7 +273,6 @@ local function CreateSciFiButton(text, callback)
     end)
 
     btn.MouseButton1Click:Connect(callback)
-    btn.TouchTap:Connect(callback)
     return btn
 end
 
@@ -352,7 +349,6 @@ local function toggleSpeed()
 end
 
 SpeedBtn.MouseButton1Click:Connect(toggleSpeed)
-SpeedBtn.TouchTap:Connect(toggleSpeed)
 
 CreateSciFiButton("ไปที่ประตู", function()
     local char = LocalPlayer.Character
