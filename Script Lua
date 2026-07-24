@@ -201,19 +201,25 @@ local CloseStroke = Instance.new("UIStroke", CloseBtn)
 CloseStroke.Color = Color3.fromRGB(255, 50, 50)
 CloseStroke.Thickness = 1.5
 
-CloseBtn.Activated:Connect(function()
-    MainFrame.Visible = false
-    TweenService:Create(ToggleMenuBtn, TweenInfo.new(0.2), {BackgroundTransparency = 0}):Play()
-end)
-
-ToggleMenuBtn.Activated:Connect(function()
+local function toggleMenu()
     MainFrame.Visible = not MainFrame.Visible
     if MainFrame.Visible then
         TweenService:Create(ToggleMenuBtn, TweenInfo.new(0.2), {BackgroundTransparency = 0.5}):Play()
     else
         TweenService:Create(ToggleMenuBtn, TweenInfo.new(0.2), {BackgroundTransparency = 0}):Play()
     end
-end)
+end
+
+local function closeMenu()
+    MainFrame.Visible = false
+    TweenService:Create(ToggleMenuBtn, TweenInfo.new(0.2), {BackgroundTransparency = 0}):Play()
+end
+
+ToggleMenuBtn.MouseButton1Click:Connect(toggleMenu)
+ToggleMenuBtn.TouchTap:Connect(toggleMenu)
+
+CloseBtn.MouseButton1Click:Connect(closeMenu)
+CloseBtn.TouchTap:Connect(closeMenu)
 
 local LineSeparator = Instance.new("Frame")
 LineSeparator.Size = UDim2.new(1, -24, 0, 1)
@@ -268,7 +274,8 @@ local function CreateSciFiButton(text, callback)
         TweenService:Create(stroke, TweenInfo.new(0.2), {Color = Color3.fromRGB(0, 200, 230)}):Play()
     end)
 
-    btn.Activated:Connect(callback)
+    btn.MouseButton1Click:Connect(callback)
+    btn.TouchTap:Connect(callback)
     return btn
 end
 
@@ -316,7 +323,7 @@ SpeedBtn.MouseLeave:Connect(function()
     end
 end)
 
-SpeedBtn.Activated:Connect(function()
+local function toggleSpeed()
     speedEnabled = not speedEnabled
     if speedEnabled then
         SpeedBtn.Text = "วิ่งเร็ว 50 : ON"
@@ -342,7 +349,10 @@ SpeedBtn.Activated:Connect(function()
         end
         SendNotification("ระบบความเร็ว", "ปิดการใช้งานแล้ว")
     end
-end)
+end
+
+SpeedBtn.MouseButton1Click:Connect(toggleSpeed)
+SpeedBtn.TouchTap:Connect(toggleSpeed)
 
 CreateSciFiButton("ไปที่ประตู", function()
     local char = LocalPlayer.Character
